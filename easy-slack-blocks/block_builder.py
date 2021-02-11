@@ -71,9 +71,7 @@ class BlockBuilder(list):
                 '\'Image\' object definitions'
             )
         elif isinstance(context, str):
-            print('converting str to Text')
             context = [Text(context)]
-            print(context)
         elif not isinstance(context, list):
             context = [context]
 
@@ -94,7 +92,6 @@ class BlockBuilder(list):
                 element_type != 'plain_text' and 
                 element_type != 'image'
             ):
-                print(element_type)
                 raise ValueError(
                     'The \'context\' parameter must be a list of \'Text\' or '
                     '\'Image\' object definitions'
@@ -240,6 +237,9 @@ class BlockBuilder(list):
 
         self.append(block)
 
+    def add_text(self, text, *, block_id=None):
+        """Simplified alias for adding a text only section block."""
+        self.add_section(text=text, block_id=block_id)
     
     def add_raw_block(self, block_type, **kwargs):
         """Add a 'raw' block.
