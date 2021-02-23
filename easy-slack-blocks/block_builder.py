@@ -4,6 +4,8 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
+from section_blocks import Section
+
 class BlockBuilder(list):
     """Simple Class for generating Slack Blocks.
 
@@ -209,37 +211,40 @@ class BlockBuilder(list):
         # TODO add this block definition
         ...
 
-    def add_section(self, text=None, *, fields=None, accessory=None, block_id=None):
+    def add_section(
+        self, 
+        value=None, 
+        *,
+        text=None,
+        text_type=None, 
+        emoji=None, 
+        verbatim=None,
+        fields=None, 
+        accessory=None, 
+        block_id=None
+    ):
         """Add a section block."""
-
-        # TODO add parameter validation
-        block = {'type': 'section'}
-
-        if text:
-            if isinstance(text, str):
-                text = Text(text)
-            block['text'] = text
-            
-            if fields:
-                block['fields'] = fields
-
-        elif fields:
-            block['fields'] = fields
-        else:
-            raise ValueError(
-                'section blocks need either a text or fields parameter'
+        if not isinstance(value, dict):
+            value = Section(
+                text=text, 
+                text_type=text_type, 
+                emoji=emoji, 
+                verbatim=verbatim,
+                fields=fields,
+                accessory=accessory,
+                block_id=block_id,
             )
+        self.append(value)
 
-        # TODO implement accessory object additions
-        
-        if block_id:
-            block['block_id'] = block_id
-
-        self.append(block)
-
-    def add_text(self, text, *, block_id=None):
+    def add_text(self, text, *, text_type=None, emoji=None, verbatim=None, block_id=None):
         """Simplified alias for adding a text only section block."""
-        self.add_section(text=text, block_id=block_id)
+        self.add_section(
+            text=text, 
+            text_type=text_type, 
+            emoji=emoji, 
+            verbatim=verbatim, 
+            block_id=block_id,
+        )
     
     def add_raw_block(self, block_type, **kwargs):
         """Add a 'raw' block.
