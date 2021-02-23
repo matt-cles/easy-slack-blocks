@@ -4,6 +4,7 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
+from header_blocks import Header
 from image_blocks import Image
 from input_blocks import Input
 from section_blocks import Section
@@ -150,30 +151,28 @@ class BlockBuilder(list):
 
         self.append(block)
 
-    def add_header(self, text, *, emoji=True, block_id=None):
+    def add_header(
+        self, 
+        value=None, 
+        *, 
+        text=None,
+        emoji=True, 
+        block_id=None,):
         """Add a header block."""
 
-        if not isinstance(text, Text):
-            text = Text(text, 'plain_text', emoji=emoji)
+        if not isinstance(value, dict):
+            # If no explict text was passed, us the non-dict value as the 
+            # text parameter
+            if not text:
+                text = value
 
-        if text['type'] != 'plain_text':
-            raise ValueError(
-                'header blocks can only accept text components with a '
-                '\'text_type\' of \'plain_text\'\n'
-                'See https://api.slack.com/reference/block-kit/blocks#header '
-                'for more information.'
+            value = Header(
+                text=text,
+                emoji=emoji,
+                block_id=block_id,
             )
-
-        block = {
-            'type': 'header',
-            'text': text,
-        }
-
-        if block_id:
-            block['block_id'] = block_id
+        self.append(value)
         
-        self.append(block)
-
     def add_image(
         self, 
         value=None, 
