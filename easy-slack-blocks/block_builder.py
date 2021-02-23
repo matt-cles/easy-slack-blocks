@@ -205,11 +205,32 @@ class BlockBuilder(list):
 
         self.append(block)
 
-    def add_input(self, *, block_id=None):
-        """Add an input block."""
+    def add_input(
+        self, 
+        value=None,
+        *, 
+        label=None, 
+        element=None, 
+        dispatch_action=False, 
+        hint=None, 
+        optional=False, 
+        block_id=None,
+    ):
+        """Add an input block.
 
-        # TODO add this block definition
-        ...
+        Warning, this type of block is only valid in Modals and the Home Tab.
+        It cannot be used in a message block.
+        """
+        if not isinstance(value, dict):
+            value = Input(
+                label=label,
+                element=element,
+                dispatch_action=dispatch_action,
+                hint=hint,
+                optional=optional,
+                block_id=block_id,
+            )
+        self.append(value)
 
     def add_section(
         self, 
