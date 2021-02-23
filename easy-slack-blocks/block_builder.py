@@ -4,7 +4,10 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
+from image_blocks import Image
+from input_blocks import Input
 from section_blocks import Section
+
 
 class BlockBuilder(list):
     """Simple Class for generating Slack Blocks.
@@ -173,37 +176,25 @@ class BlockBuilder(list):
 
     def add_image(
         self, 
-        image=None, 
+        value=None, 
         *, 
+        image=None,
         image_url=None, 
         text_description=None, 
         title_text=None, 
         block_id=None
     ):
         """Add an image block."""
-        
-        #TODO add parameter validation
 
-        if image:
-            image_url = image.get('image_url')
-            text_description = image.get('alt_text')
-        
-        block = {
-            'type': 'image',
-            'image_url': image_url,
-            'alt_text': text_description
-        }
-
-        if title_text:
-            block['title'] = {
-                'type': 'plain_text',
-                'text': title_text,
-            }
-
-        if block_id:
-            block['block_id'] = block_id
-
-        self.append(block)
+        if not isinstance(value, dict):
+            value = Image(
+                image=image,
+                image_url=image_url,
+                text_description=text_description,
+                title_text=title_text,
+                block_id=block_id
+            )
+        self.append(value)
 
     def add_input(
         self, 
