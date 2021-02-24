@@ -41,7 +41,7 @@ class Header(dict):
                 'See https://api.slack.com/reference/block-kit/blocks#header '
                 'for more information.'
             )
-        if block_id and len(block_id) > 255:
+        if len(block.get('block_id', [])) > 255:
             raise ValueError(
                 'the maximum length of a block_id is 255 characters\n'
                 'See https://api.slack.com/reference/block-kit/blocks '
