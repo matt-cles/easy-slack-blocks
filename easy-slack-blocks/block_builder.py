@@ -121,8 +121,9 @@ class BlockBuilder(list):
 
     def add_file(
         self,
-        external_id: str,
+        value=None,
         *,
+        external_id: str=None,
         source: str='remote',
         block_id: str=None
     ):
@@ -130,7 +131,7 @@ class BlockBuilder(list):
         
         Note that this currently does not support uploading a file, but
         simply creates a block that can display an existing uploaded 
-        file by referancing the 'extenal_id.
+        file by referancing the 'external_id.
 
         source is another field required by Slack, but currently, the 
         only valid value is 'remote'
@@ -140,16 +141,13 @@ class BlockBuilder(list):
         here: https://api.slack.com/reference/block-kit/blocks#file
         """
 
-        block = {
-            'type': 'file',
-            'external_id': external_id,
-            'source': source,
-        }
-
-        if block_id:
-            block['block_id'] = block_id
-
-        self.append(block)
+        if not isinstance(value, dict):
+            value = File(
+                external_id=external_id,
+                source=source,
+                block_id=block_id,
+            )
+        self.append(value)
 
     def add_header(
         self, 
@@ -172,7 +170,7 @@ class BlockBuilder(list):
                 block_id=block_id,
             )
         self.append(value)
-        
+
     def add_image(
         self, 
         value=None, 
