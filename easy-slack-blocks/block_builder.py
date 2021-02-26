@@ -4,6 +4,7 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
+from action_blocks import Actions
 from context_blocks import Context
 from header_blocks import Header
 from image_blocks import Image
@@ -28,42 +29,23 @@ class BlockBuilder(list):
         super(BlockBuilder, self).__init__(*args, **kwargs)
 
     def add_actions(
-        self,
-        actions: list,
-        block_id: str=None):
-        """Add an action block.
+        self, 
+        value=None, 
+        *,
+        elements=None,
+        block_id=None,
+    ):
+        """Add an action block."""
+        if not isinstance(value, dict):
+            # If no elements, use value as the elements
+            if elements is None:
+                elements = value
 
-        Parameters:
-         - actions: 
-            A list of Slack Action object definitions, these include 
-            Buttons, Select Menues, Overflow Menus, and Date Pickers.
-            Each Actions block may have no more that 5 Actions.
-         - block_id (optional): 
-            A unique identifier for a block
-        """
-
-        if len(actions) > 5:
-            raise ValueError(
-                'The \'actions\' parameter must be a list with no more than '
-                '5 elements'
+            value = Actions(
+                elements=elements,
+                block_id=block_id,
             )
-
-        block = {
-            'type': 'actions',
-            'elements': [],
-        }
-        for element in actions:
-            if element['type'] != 'action':
-                raise ValueError(
-                    'The \'actions\' parameter must be a list of \'Action\' '
-                    'object definitions'
-                )
-            block['elements'].append(element)
-
-        if block_id:
-            block['block_id'] = block_id
-
-        self.append(block)
+        self.append(value)
 
     def add_context(
         self, 
