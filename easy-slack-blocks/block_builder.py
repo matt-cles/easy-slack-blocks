@@ -4,6 +4,7 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
+from context_blocks import Context
 from header_blocks import Header
 from image_blocks import Image
 from input_blocks import Input
@@ -65,49 +66,24 @@ class BlockBuilder(list):
         self.append(block)
 
     def add_context(
-        self,
-        context: list=None,
+        self, 
+        value=None, 
         *,
+        elements=None,
         block_id=None,
     ):
         """Add a context block."""
-        if context is None:
-            raise ValueError(
-                'The \'context\' parameter must be a list of \'Text\' or '
-                '\'Image\' object definitions'
+        if not isinstance(value, dict):
+            # If no elements, use value as the elements
+            if elements is None:
+                elements = value
+
+            value = Context(
+                elements=elements,
+                block_id=block_id,
             )
-        elif isinstance(context, str):
-            context = [Text(context)]
-        elif not isinstance(context, list):
-            context = [context]
-
-        if len(context) > 10:
-            raise ValueError(
-                'The \'context\' parameter must be a list of no more than '
-                '10 \'Text\' or \'Image\' object definitions'
-            )
-
-        block = {
-            'type': 'context',
-            'elements': context,
-        }
-
-        for element in context:
-            element_type = element['type']
-            if (element_type != 'mrkdwn' and 
-                element_type != 'plain_text' and 
-                element_type != 'image'
-            ):
-                raise ValueError(
-                    'The \'context\' parameter must be a list of \'Text\' or '
-                    '\'Image\' object definitions'
-                )
-
-        if block_id:
-            block['block_id'] = block_id
-
-        self.append(block)
-
+        self.append(value)
+        
     def add_divider(self, *, block_id=None):
         """Add a divider block"""
         block = {
@@ -155,12 +131,13 @@ class BlockBuilder(list):
         *, 
         text=None,
         emoji=True, 
-        block_id=None,):
+        block_id=None,
+    ):
         """Add a header block."""
 
         if not isinstance(value, dict):
-            # If no explict text was passed, us the non-dict value as the 
-            # text parameter
+            # If no explict text was passed, try to use the non-dict value 
+            # as the text parameter
             if not text:
                 text = value
 
@@ -234,6 +211,11 @@ class BlockBuilder(list):
     ):
         """Add a section block."""
         if not isinstance(value, dict):
+            # If no explict text was passed, try to use the non-dict value 
+            # as the text parameter
+            if not text:
+                text = value
+
             value = Section(
                 text=text, 
                 text_type=text_type, 
@@ -245,7 +227,15 @@ class BlockBuilder(list):
             )
         self.append(value)
 
-    def add_text(self, text, *, text_type=None, emoji=None, verbatim=None, block_id=None):
+    def add_text(
+        self, 
+        text, 
+        *, 
+        text_type=Text.MRKDWN, 
+        emoji=None, 
+        verbatim=None, 
+        block_id=None,
+    ):
         """Simplified alias for adding a text only section block."""
         self.add_section(
             text=text, 
