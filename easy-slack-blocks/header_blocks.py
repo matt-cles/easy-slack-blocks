@@ -9,7 +9,6 @@ class Header(dict):
         emoji=None,
         block_id=None,
     ):  
-        print(text)
         # Start the base block
         block = {'type': 'header'}
 
@@ -20,7 +19,6 @@ class Header(dict):
                 text_type=Text.PLAIN_TEXT,
                 emoji=emoji,
             )
-        print(text)
         block['text'] = text
 
         if block_id:
