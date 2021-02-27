@@ -4,7 +4,7 @@ from webbrowser import open as open_browser
 from components.text import Text
 from components.actions import Action, Button
 
-from action_blocks import Actions
+from actions_blocks import Actions
 from context_blocks import Context
 from header_blocks import Header
 from image_blocks import Image
