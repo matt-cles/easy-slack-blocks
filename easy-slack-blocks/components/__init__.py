@@ -1,2 +1,3 @@
-from .actions import Action, Button
+from .actions import Button
 from .text import Text
+from .image import Image

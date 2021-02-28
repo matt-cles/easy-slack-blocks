@@ -1,8 +1,8 @@
 class Text(dict):
     """docstring for Text.
 
-    See https://api.slack.com/reference/block-kit/composition-objects#text
-    for more information
+    For more information, see the following URL:
+    https://api.slack.com/reference/block-kit/composition-objects#text
     """
     MRKDWN = MARKDOWN = RICH = 'mrkdwn'
     PLAIN_TEXT = PLAIN = 'plain_text'
