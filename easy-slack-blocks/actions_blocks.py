@@ -15,7 +15,7 @@ class Actions(dict):
 
         # Start the base block
         block = {
-            'type': 'context',
+            'type': 'actions',
             'elements': elements,
         }
 
