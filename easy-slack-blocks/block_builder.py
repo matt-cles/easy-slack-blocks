@@ -2,7 +2,6 @@ import json
 from webbrowser import open as open_browser
 
 from components.text import Text
-from components.actions import Action, Button
 
 from actions_blocks import Actions
 from context_blocks import Context
@@ -184,7 +183,7 @@ class BlockBuilder(list):
         value=None, 
         *,
         text=None,
-        text_type=None, 
+        text_type=Text.MRKDWN, 
         emoji=None, 
         verbatim=None,
         fields=None, 
@@ -246,7 +245,7 @@ class BlockBuilder(list):
         return (
             'https://app.slack.com/block-kit-builder/#{"blocks":'
             f'{json_string}' '}'
-            )
+        )
 
     def open_preview_in_browser(self):
         """Opens a preview of the current Blocks in the BlockBuilder.
