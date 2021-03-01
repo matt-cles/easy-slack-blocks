@@ -1,5 +1,8 @@
 class DispatchActionConfiguration(object):
-    """docstring for DispatchActionConfiguration"""
+    """Slack Dispatch Action Configuration composition object builder.
+
+    For more information, see the following URL:
+    https://api.slack.com/reference/block-kit/composition-objects#dispatch_action_config"""
 
     ON_ENTER_PRESSED = 'on_enter_pressed'
     ON_CHARACTER_ENTERED = 'on_character_entered'
