@@ -1,4 +1,4 @@
-from components.text import Text
+from .components import Text
 
 class Header(dict):
     """docstring for Header"""

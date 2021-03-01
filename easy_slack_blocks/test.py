@@ -1,10 +1,8 @@
 from block_builder import BlockBuilder
-from components.text import Text
-from components.actions import Button
-from components.image import Image
-from components.confirmation import Confirmation
-
-
+from components import Text
+from components import Button
+from components import Image
+from components import Confirmation
 
 block_builder = BlockBuilder()
 

@@ -1,4 +1,4 @@
-from .text import text
+from .text import Text
 
 class Option(dict):
     """Slack Option composition builder.

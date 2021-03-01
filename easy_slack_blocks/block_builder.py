@@ -1,14 +1,14 @@
 import json
 from webbrowser import open as open_browser
 
-from components.text import Text
+from .components import Text
 
-from actions_blocks import Actions
-from context_blocks import Context
-from header_blocks import Header
-from image_blocks import Image
-from input_blocks import Input
-from section_blocks import Section
+from .actions_blocks import Actions
+from .context_blocks import Context
+from .header_blocks import Header
+from .image_blocks import Image
+from .input_blocks import Input
+from .section_blocks import Section
 
 
 class BlockBuilder(list):

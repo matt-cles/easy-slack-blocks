@@ -1,4 +1,4 @@
-from components.text import Text
+from .components import Text
 
 class Section(dict):
     """docstring for Section"""

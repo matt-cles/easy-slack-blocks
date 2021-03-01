@@ -1,4 +1,4 @@
-from components.text import Text
+from .components import Text
 
 class Context(dict):
     """docstring for Context"""

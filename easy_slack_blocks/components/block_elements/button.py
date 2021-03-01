@@ -1,4 +1,4 @@
-from .text import Text
+from .. import Text
 
 class Button(dict):
     """docstring for Button"""
