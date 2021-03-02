@@ -2,7 +2,16 @@ import json
 from webbrowser import open as open_browser
 
 from ..components import Text
-from ..blocks import Actions, Context, Header, Image, Input, Section
+from ..blocks import (
+    Actions, 
+    Context, 
+    Divider,
+    File, 
+    Header, 
+    Image, 
+    Input, 
+    Section,
+)
 
 
 class BlockBuilder(list):
@@ -61,12 +70,7 @@ class BlockBuilder(list):
         
     def add_divider(self, *, block_id=None):
         """Add a divider block"""
-        block = {
-            'type': 'divider',
-        }
-
-        if block_id:
-            block['block_id'] = block_id
+        block = Divider(block_id=block_id)
 
         self.append(block)
 
