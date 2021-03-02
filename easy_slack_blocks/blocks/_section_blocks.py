@@ -1,7 +1,11 @@
 from ..components import Text
 
 class Section(dict):
-    """docstring for Section"""
+    """Generate a Section Block.
+
+    See Slack documentation for the Section Block here:
+    https://api.slack.com/reference/block-kit/blocks#section
+    """
     def __init__(
         self, 
         *,

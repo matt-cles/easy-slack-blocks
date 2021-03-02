@@ -1,5 +1,9 @@
 class Divider(dict):
-    """docstring for Divider"""
+    """Generate a Divider Block.
+
+    See Slack documentation for the Divider Block here:
+    https://api.slack.com/reference/block-kit/blocks#divider
+    """
     def __init__(
         self, 
         *,

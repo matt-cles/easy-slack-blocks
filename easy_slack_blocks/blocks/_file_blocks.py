@@ -1,5 +1,9 @@
 class File(dict):
-    """docstring for File"""
+    """Generate a File Block.
+
+    See Slack documentation for the File Block here:
+    https://api.slack.com/reference/block-kit/blocks#file
+    """
     def __init__(
         self, 
         external_id: str,

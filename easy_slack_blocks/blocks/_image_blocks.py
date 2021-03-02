@@ -1,7 +1,11 @@
 from ..components import Image as ImageComponent
 
 class Image(dict):
-    """docstring for Image"""
+    """Generate an Image Block.
+
+    See Slack documentation for the Input Block here:
+    https://api.slack.com/reference/block-kit/blocks#image
+    """
     def __init__(
         self,
         *,

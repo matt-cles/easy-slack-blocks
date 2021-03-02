@@ -1,7 +1,11 @@
 from ..components import Text
 
 class Context(dict):
-    """docstring for Context"""
+    """Generate a Context Block.
+
+    See Slack documentation for the Context Block here:
+    https://api.slack.com/reference/block-kit/blocks#context
+    """
     def __init__(
         self, 
         elements,

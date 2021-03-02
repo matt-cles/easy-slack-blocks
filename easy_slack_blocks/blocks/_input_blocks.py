@@ -1,7 +1,11 @@
 from ..components import Text
 
 class Input(dict):
-    """docstring for Input"""
+    """Generate an Input Block.
+
+    See Slack documentation for the Input Block here:
+    https://api.slack.com/reference/block-kit/blocks#input
+    """
     def __init__(
         self, 
         label, 

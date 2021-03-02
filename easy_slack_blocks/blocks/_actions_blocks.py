@@ -1,7 +1,11 @@
 from ..components import Text
 
 class Actions(dict):
-    """docstring for Actions"""
+    """Generate an Actions Block.
+
+    See Slack documentation for the Actions Block here:
+    https://api.slack.com/reference/block-kit/blocks#actions
+    """
     def __init__(
         self, 
         elements,

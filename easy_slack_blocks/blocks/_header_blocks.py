@@ -1,7 +1,11 @@
 from ..components import Text
 
 class Header(dict):
-    """docstring for Header"""
+    """Generate a Header Block.
+
+    See Slack documentation for the Header Block here:
+    https://api.slack.com/reference/block-kit/blocks#header
+    """
     def __init__(
         self, 
         text,
