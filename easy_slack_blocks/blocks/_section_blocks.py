@@ -6,7 +6,7 @@ class Section(dict):
         self, 
         *,
         text=None,
-        text_type=None,
+        text_type=Text.MRKDWN,
         emoji=None,
         verbatim=None,
         fields=None,
