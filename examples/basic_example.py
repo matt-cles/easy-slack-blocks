@@ -5,8 +5,8 @@ block_builder = BlockBuilder()
 
 block_builder.add_header('Welcome to easy-slack-blocks :wave:')
 block_builder.add_image(
-    image_url='https://source.unsplash.com/random/512x256/?block', 
-    text_description='The world is your oyster.',
+    image_url='https://source.unsplash.com/Xpihv46a5bc/512x256/', 
+    text_description='@phil sheldon ABIPP: https://unsplash.com/@sploshd',
 )
 block_builder.add_text(
     '*easy-slack-blocks* is a python module designed to make it easy and '
