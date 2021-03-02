@@ -1,7 +1,11 @@
 from .. import Text
 
 class Button(dict):
-    """docstring for Button"""
+    """Generate a Button element.
+
+    See Slack documentation for the Button Block Element here:
+    https://api.slack.com/reference/block-kit/block-elements#button
+    """
     DEFAULT = STANDARD = GREY = 'default'
     PRIMARY = CONFIRM = GREEN = 'primary'
     DANGER = DENY = RED = 'danger'
