@@ -5,7 +5,7 @@ with open('README.md', 'r') as readme_file:
 
 setuptools.setup(
     name='easy-slack-blocks',
-    version='0.0.1',
+    version='1.0.0',
     author='Matthew Cles',
     author_email='matthew@cles.dev',
     description='An easy way to format Slack Blocks.',
