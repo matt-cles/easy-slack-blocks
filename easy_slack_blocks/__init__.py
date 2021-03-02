@@ -1,1 +1,1 @@
-from .block_builder import BlockBuilder
+from ._block_builder import BlockBuilder

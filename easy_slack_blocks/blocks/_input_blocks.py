@@ -1,4 +1,4 @@
-from .components import Text
+from ..components import Text
 
 class Input(dict):
     """docstring for Input"""

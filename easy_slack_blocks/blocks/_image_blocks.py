@@ -1,4 +1,4 @@
-from .components import Image as ImageComponent
+from ..components import Image as ImageComponent
 
 class Image(dict):
     """docstring for Image"""
