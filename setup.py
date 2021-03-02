@@ -13,4 +13,5 @@ setuptools.setup(
     long_description_content='text/markdown',
     url='https://github.com/matt-cles/easy-slack-blocks/',
     packages=setuptools.find_packages(),
+    license="MIT",
 )
