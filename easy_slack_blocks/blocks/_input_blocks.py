@@ -23,7 +23,7 @@ class Input(dict):
         if isinstance(label, str):
             label = Text(
                 text=label,
-                text_type=Text.PLAIN_TEXT,
+                type=Text.PLAIN_TEXT,
             )
         block['label'] = label
         block['element'] = element

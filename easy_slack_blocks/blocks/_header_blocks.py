@@ -20,7 +20,7 @@ class Header(dict):
         if isinstance(text, str):
             text = Text(
                 text=text,
-                text_type=Text.PLAIN_TEXT,
+                type=Text.PLAIN_TEXT,
                 emoji=emoji,
             )
         block['text'] = text
@@ -32,7 +32,7 @@ class Header(dict):
         if block.get('text').get('type') != Text.PLAIN_TEXT:
             raise ValueError(
                 'header blocks can only accept text components with a '
-                '\'text_type\' of \'plain_text\'\n'
+                '\'type\' of \'plain_text\'\n'
                 'See https://api.slack.com/reference/block-kit/blocks#header '
                 'for more information.'
             )

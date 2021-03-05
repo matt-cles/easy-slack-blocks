@@ -38,7 +38,7 @@ class BlockBuilder(list):
         block_id=None,
     ):
         """Add an action block."""
-        if not isinstance(value, dict):
+        if not isinstance(value, dict) or value.get('type') != 'actions':
             # If no elements, use value as the elements
             if elements is None:
                 elements = value
@@ -57,7 +57,7 @@ class BlockBuilder(list):
         block_id=None,
     ):
         """Add a context block."""
-        if not isinstance(value, dict):
+        if not isinstance(value, dict) or value.get('type') != 'context':
             # If no elements, use value as the elements
             if elements is None:
                 elements = value
@@ -114,7 +114,7 @@ class BlockBuilder(list):
     ):
         """Add a header block."""
 
-        if not isinstance(value, dict):
+        if not isinstance(value, dict) or value.get('type') != 'header':
             # If no explict text was passed, try to use the non-dict value 
             # as the text parameter
             if not text:
@@ -181,7 +181,7 @@ class BlockBuilder(list):
         value=None, 
         *,
         text=None,
-        text_type=Text.MRKDWN, 
+        type=Text.MRKDWN, 
         emoji=None, 
         verbatim=None,
         fields=None, 
@@ -189,7 +189,7 @@ class BlockBuilder(list):
         block_id=None
     ):
         """Add a section block."""
-        if not isinstance(value, dict):
+        if not isinstance(value, dict) or value.get('type') != 'section':
             # If no explict text was passed, try to use the non-dict value 
             # as the text parameter
             if not text:
@@ -197,7 +197,7 @@ class BlockBuilder(list):
 
             value = Section(
                 text=text, 
-                text_type=text_type, 
+                type=type, 
                 emoji=emoji, 
                 verbatim=verbatim,
                 fields=fields,
@@ -210,7 +210,7 @@ class BlockBuilder(list):
         self, 
         text, 
         *, 
-        text_type=Text.MRKDWN, 
+        type=Text.MRKDWN, 
         emoji=None, 
         verbatim=None, 
         block_id=None,
@@ -218,7 +218,7 @@ class BlockBuilder(list):
         """Simplified alias for adding a text only section block."""
         self.add_section(
             text=text, 
-            text_type=text_type, 
+            type=type, 
             emoji=emoji, 
             verbatim=verbatim, 
             block_id=block_id,

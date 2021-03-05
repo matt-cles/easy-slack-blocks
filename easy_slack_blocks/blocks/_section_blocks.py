@@ -10,7 +10,7 @@ class Section(dict):
         self, 
         *,
         text=None,
-        text_type=Text.MRKDWN,
+        type=Text.MRKDWN,
         emoji=None,
         verbatim=None,
         fields=None,
@@ -25,7 +25,7 @@ class Section(dict):
             if isinstance(text, str):
                 text = Text(
                     text=text,
-                    text_type=text_type,
+                    type=type,
                     emoji=emoji,
                     verbatim=verbatim,
                 )

@@ -21,6 +21,8 @@ class Confirmation(dict):
         confirm,
         deny,
         style='primary',
+        *,
+        validate=True,
     ):
         if isinstance(title, str):
             title = Text(title, Text.PLAIN_TEXT, emoji=False)
@@ -34,8 +36,12 @@ class Confirmation(dict):
         if isinstance(deny, str):
             deny = Text(deny, Text.PLAIN_TEXT, emoji=False)
 
-        ### TODO:
-        ### add element validation
+        if validate:
+            ### TODO:
+            ### add element validation
+            if title.get('type') != Text.PLAIN_TEXT:
+                raise ValueError('')
+
 
         super(Confirmation, self).__init__(
             title=title,

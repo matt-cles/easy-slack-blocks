@@ -27,7 +27,7 @@ class StaticMultiSelectMenu(dict):
         if isinstance(placeholder, str):
             placeholder = Text(
                 text=placeholder, 
-                text_type=Text.PLAIN_TEXT, 
+                type=Text.PLAIN_TEXT, 
                 emoji=False,
             )
 
@@ -83,7 +83,7 @@ class ExternalMultiSelectMenu(dict):
         if isinstance(placeholder, str):
             placeholder = Text(
                 text=placeholder, 
-                text_type=Text.PLAIN_TEXT, 
+                type=Text.PLAIN_TEXT, 
                 emoji=False,
             )
 
@@ -129,7 +129,7 @@ class UserMultiSelectMenu(dict):
         if isinstance(placeholder, str):
             placeholder = Text(
                 text=placeholder, 
-                text_type=Text.PLAIN_TEXT, 
+                type=Text.PLAIN_TEXT, 
                 emoji=False,
             )
 
@@ -176,7 +176,7 @@ class ConversationMultiSelectMenu(dict):
         if isinstance(placeholder, str):
             placeholder = Text(
                 text=placeholder, 
-                text_type=Text.PLAIN_TEXT, 
+                type=Text.PLAIN_TEXT, 
                 emoji=False,
             )
 
@@ -227,7 +227,7 @@ class PublicChannelMultiSelectMenu(dict):
         if isinstance(placeholder, str):
             placeholder = Text(
                 text=placeholder, 
-                text_type=Text.PLAIN_TEXT, 
+                type=Text.PLAIN_TEXT, 
                 emoji=False,
             )
 

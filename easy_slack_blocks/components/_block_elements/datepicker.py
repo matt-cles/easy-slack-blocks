@@ -23,7 +23,7 @@ class DatePicker(dict):
             if isinstance(placeholder, str):
                 placeholder = Text(
                     text=placeholder, 
-                    text_type=Text.PLAIN_TEXT, 
+                    type=Text.PLAIN_TEXT, 
                     emoji=False,
                 )
             datepicker['placeholder'] = placeholder
