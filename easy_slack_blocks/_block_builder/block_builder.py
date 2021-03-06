@@ -13,6 +13,12 @@ from ..blocks import (
     Section,
 )
 
+class BlockTypes(object):
+    MESSAGE = 'message',
+    MODAL = 'modal',
+    ATTACHMENT = 'attachment'
+    APP_HOME = HOME = 'home'
+
 
 class BlockBuilder(list):
     """Simple Class for generating Slack Blocks.
@@ -27,8 +33,23 @@ class BlockBuilder(list):
     See https://api.slack.com/reference/block-kit/blocks for information 
     on the availible Slack Block types.
     """
-    def __init__(self, *args, **kwargs):
+
+    MESSAGE = 'message',
+    MODAL = 'modal',
+    ATTACHMENT = 'attachment'
+    APP_HOME = HOME = 'home'
+
+
+    def __init__(self, block_type=BlockTypes.MESSAGE, *args, **kwargs):
         super(BlockBuilder, self).__init__(*args, **kwargs)
+        self._block_type = block_type
+
+        if block_type == BlockTypes.ATTACHMENT:
+            self._color = '#3098c8'
+
+        if block_type == BlockTypes.MODAL:
+            self._title = Text('My easy-slack-blocks App', Text.PLAIN_TEXT, emoji=True)
+
 
     def add_actions(
         self, 
@@ -95,6 +116,12 @@ class BlockBuilder(list):
         this type of blocks in Modals or the Home Tab. see more info
         here: https://api.slack.com/reference/block-kit/blocks#file
         """
+        if self._block_type != self.MESSAGE:
+            raise ValueError(
+                'File block can only be used in messages. If you are '
+                'building blocks for a Modal or the Home tab, you cannot'
+                'add File blocks'
+            )
 
         if not isinstance(value, dict):
             value = File(
@@ -165,6 +192,14 @@ class BlockBuilder(list):
         Warning, this type of block is only valid in Modals and the Home Tab.
         It cannot be used in a message block.
         """
+        if self._block_type == self.MESSAGE:
+            raise ValueError(
+                'Input block cannot be used in messages. If you are building '
+                'blocks for a Modal or the Home tab, initialize the '
+                'BlockBuilder with \'block_type\' of BlockBuilder.MODAL or '
+                'BlockBuilder.HOME'
+            )
+
         if not isinstance(value, dict):
             value = Input(
                 label=label,
@@ -239,11 +274,27 @@ class BlockBuilder(list):
 
     def get_url_string(self):
         """Get a URL to view the current blocks in the BlockBuilder."""
-        json_string = json.dumps(self)
-        return (
-            'https://app.slack.com/block-kit-builder/#{"blocks":'
-            f'{json_string}' '}'
-        )
+        payload = f'"blocks":{json.dumps(self)}'
+
+        if self._block_type == BlockBuilder.ATTACHMENT:
+            payload = (
+                '"attachments":'
+                f'[{{"color":"{self._color}",{payload}}}]'
+            )
+        elif self._block_type == BlockBuilder.MODAL:
+            payload = (
+                f'"type":"modal","title":{json.dumps(self._title)},'
+                '"submit": {"type": "plain_text","text": "Submit","emoji": true},'
+                '"close": {"type": "plain_text","text": "Cancel","emoji": true},'
+                f'{payload}'
+            )
+        elif self._block_type == BlockBuilder.HOME:
+            payload = f'"type":"home",{payload}'
+
+
+        payload = f'https://app.slack.com/block-kit-builder/#{{{payload}}}'
+
+        return payload
 
     def open_preview_in_browser(self):
         """Opens a preview of the current Blocks in the BlockBuilder.
