@@ -13,12 +13,6 @@ from ..blocks import (
     Section,
 )
 
-class BlockTypes(object):
-    MESSAGE = 'message',
-    MODAL = 'modal',
-    ATTACHMENT = 'attachment'
-    APP_HOME = HOME = 'home'
-
 
 class BlockBuilder(list):
     """Simple Class for generating Slack Blocks.
@@ -40,14 +34,16 @@ class BlockBuilder(list):
     APP_HOME = HOME = 'home'
 
 
-    def __init__(self, block_type=BlockTypes.MESSAGE, *args, **kwargs):
+    def __init__(self, *args, block_type=None, **kwargs):
         super(BlockBuilder, self).__init__(*args, **kwargs)
+        if not block_type:
+            block_type = BlockBuilder.MESSAGE
         self._block_type = block_type
 
-        if block_type == BlockTypes.ATTACHMENT:
+        if block_type == BlockBuilder.ATTACHMENT:
             self._color = '#3098c8'
 
-        if block_type == BlockTypes.MODAL:
+        if block_type == BlockBuilder.MODAL:
             self._title = Text('My easy-slack-blocks App', Text.PLAIN_TEXT, emoji=True)
 
 
