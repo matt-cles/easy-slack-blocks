@@ -26,8 +26,13 @@ class DispatchActionConfiguration(dict):
             self.validate()
 
     def validate(self):    
-        max_len = len(ALL_DISPATCH_ACTION_CONFIGURATIONS)
+        if not isinstance(self, dict):
+            raise ValueError(
+                'A \'DispatchActionConfiguration\' element must be a dict '
+                'object'
+            )
 
+        max_len = len(ALL_DISPATCH_ACTION_CONFIGURATIONS)
         trigger_actions_on = self.get('trigger_actions_on')
         if (
             not isinstance(trigger_actions_on, list) or

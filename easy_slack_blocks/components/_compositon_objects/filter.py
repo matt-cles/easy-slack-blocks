@@ -40,6 +40,9 @@ class Filter(dict):
             self.validate()
         
     def validate(self):
+        if not isinstance(self, dict):
+            raise ValueError('A \'Filter\' element must be a dict object')
+
         for element in self.get('include'):
             if element not in [PUBLIC, PRIVATE, IM, MPIM]:
                 raise ValueError(
