@@ -15,7 +15,7 @@ class OptionGroup(dict):
         validate=True
     ):
         if isinstance(label, str):
-            label = Text(label, Text.PLAIN_TEXT, emoji=False)
+            label = Text(label, Text.PLAIN_TEXT, emoji=False, validate=False)
 
         if not isinstance(options, list):
             options = [options]
@@ -29,24 +29,39 @@ class OptionGroup(dict):
             self.validate()
 
     def validate(self):
-        if len(self.get('label').get('text')) > 75:
+        if not isinstance(self, dict):
+            raise ValueError('An \'OptionGroup\' element must be a dict object')
+
+        # Validate Label field:
+        label = self.get('label')
+        try:
+            Text.validate(label)
+        except ValueError as err:
+            raise ValueError(
+                'the \'label\' is not a valid \'Text\' element, see error:\n'
+                f'{err}'
+            )
+
+        if len(label.get('text')) > 75:
             raise ValueError(
                 'The \'label\' text object can have a \'text\' field no '
-                'longer than 75 characters.\n See https://api.slack.com/'
+                'longer than 75 characters.\nSee https://api.slack.com/'
                 'reference/block-kit/composition-objects#'
                 'option_group__fields for more information.'
             )
-        if self.get('label').get('type') != Text.PLAIN_TEXT:
+        if label.get('type') != Text.PLAIN_TEXT:
             raise ValueError(
                 'The \'label\' text object must have a \'type\' field of '
-                'type \'plain_text\'.\n See https://api.slack.com/'
+                'type \'plain_text\'.\nSee https://api.slack.com/'
                 'reference/block-kit/composition-objects#'
                 'option_group__fields for more information.'
             )
+
+        # Validate Options:
         if len(self.get('options')) > 100:
             raise ValueError(
                 'The \'options\' list can have no than 100 Option object '
-                'elements.\n See https://api.slack.com/'
+                'elements.\nSee https://api.slack.com/'
                 'reference/block-kit/composition-objects#'
                 'option_group__fields for more information.'
             )
@@ -54,5 +69,7 @@ class OptionGroup(dict):
             try:
                 Option.validate(element)
             except ValueError as err:
-                print(err)
-
+                raise ValueError(
+                    'An element in the \'options\' list is not a valid '
+                    f'\'Option\' element, see error:\n{err}'
+                )
