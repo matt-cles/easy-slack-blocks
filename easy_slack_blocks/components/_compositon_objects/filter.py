@@ -1,4 +1,4 @@
-class Filter(object):
+class Filter(dict):
     """Slack Filter composition object builder.
 
     For more information, see the following URL:
