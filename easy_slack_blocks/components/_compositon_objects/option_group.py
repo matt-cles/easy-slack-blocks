@@ -58,14 +58,21 @@ class OptionGroup(dict):
             )
 
         # Validate Options:
-        if len(self.get('options')) > 100:
+        options = self.get('options')
+        if not isinstance(options, list):
+            raise ValueError(
+                'The \'options\' parameter must be a list.\nSee https://api.'
+                'slack.com/reference/block-kit/composition-objects#'
+                'option_group__fields for more information.'
+            )
+        if len(options) > 100:
             raise ValueError(
                 'The \'options\' list can have no than 100 Option object '
                 'elements.\nSee https://api.slack.com/'
                 'reference/block-kit/composition-objects#'
                 'option_group__fields for more information.'
             )
-        for element in self.get('options'):
+        for element in options:
             try:
                 Option.validate(element)
             except ValueError as err:
