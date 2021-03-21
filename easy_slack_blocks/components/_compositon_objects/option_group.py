@@ -38,7 +38,8 @@ class OptionGroup(dict):
             Text.validate(label)
         except ValueError as err:
             raise ValueError(
-                'the \'label\' is not a valid \'Text\' element, see error:\n'
+                'The \'label\' parameter is not a valid \'Text\' element, '
+                'see error:\n'
                 f'{err}'
             )
 

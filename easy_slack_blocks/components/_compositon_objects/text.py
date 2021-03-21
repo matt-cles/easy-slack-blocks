@@ -36,14 +36,17 @@ class Text(dict):
         if not isinstance(self, dict):
             raise ValueError('A \'Text\' element must be a dict object')
 
-        if not isinstance(self.get('text'), str):
+        # Validate text
+        text = self.get('text')
+        if not isinstance(text, str) or len(text) <= 0:
             raise ValueError(
-                'The \'text\' parameter must be a String\nSee https://api.'
-                'slack.com/reference/block-kit/composition-objects#'
-                'text__fields for more information'
+                'The \'text\' parameter must be a non-empty String\nSee '
+                'https://api.slack.com/reference/block-kit/composition-'
+                'objects#text__fields for more information'
             )
-
-        if self.get('type') == Text.MRKDWN:
+        # Validate type, and remaining parameters based on type
+        text_type = self.get('type')
+        if text_type == Text.MRKDWN:
             if self.get('emoji') is not None:
                 raise ValueError(
                     'The \'emoji\' parameter is only usable when '
@@ -54,12 +57,11 @@ class Text(dict):
             verbatim = self.get('verbatim')
             if verbatim is not None and not isinstance(verbatim, bool):
                 raise ValueError(
-                    'The \'verbatim\' parameter must be a Boolean.\nSee '
-                    'https://api.slack.com/reference/block-kit/composition-'
-                    'objects#text__fields for more information'
+                    'The \'verbatim\' parameter must be a Boolean if included.'
+                    '\nSee https://api.slack.com/reference/block-kit/'
+                    'composition-objects#text__fields for more information'
                 )
-
-        elif self.get('type') == Text.PLAIN_TEXT:
+        elif text_type == Text.PLAIN_TEXT:
             if self.get('verbatim') is not None:
                 raise ValueError(
                     'The \'verbatim\' parameter is only usable when '
@@ -70,9 +72,9 @@ class Text(dict):
             emoji = self.get('emoji')
             if emoji is not None and not isinstance(emoji, bool):
                 raise ValueError(
-                    'The \'emoji\' parameter must be a Boolean.\nSee https://'
-                    'api.slack.com/reference/block-kit/composition-objects#'
-                    'text__fields for more information'
+                    'The \'emoji\' parameter must be a Boolean if included.'
+                    '\nSee https://api.slack.com/reference/block-kit/'
+                    'composition-objects#text__fields for more information'
                 )
         else:
             raise ValueError(

@@ -52,7 +52,8 @@ class Option(dict):
             Text.validate(text)
         except ValueError as err:
             raise ValueError(
-                'the \'text\' is not a valid \'Text\' element, see error:\n'
+                'The \'text\' parameter is not a valid \'Text\' element, see '
+                'error:\n'
                 f'{err}'
             )
         if len(text.get('text')) > 75:
@@ -85,7 +86,8 @@ class Option(dict):
                 Text.validate(description)
             except ValueError as err:
                 raise ValueError(
-                    'the \'description\' is not a valid \'Text\' element, see error:\n'
+                    'The \'description\' parameter is not a valid \'Text\' '
+                    'element, see error:\n'
                     f'{err}'
                 )
             if len(description.get('text')) > 75:

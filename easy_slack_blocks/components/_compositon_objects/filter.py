@@ -49,8 +49,8 @@ class Filter(dict):
                     '\'include\' must be an array of strings from the '
                     'following options: im, mpim, private, and public\n'
                     'see https://api.slack.com/reference/block-kit/'
-                    'composition-objects#filter_conversations__fields for more '
-                    'information'
+                    'composition-objects#filter_conversations__fields for '
+                    'more information'
                 )
 
         if not isinstance(exclude_external_shared_channels, bool):
