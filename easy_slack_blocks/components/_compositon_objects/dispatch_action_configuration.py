@@ -1,4 +1,4 @@
-class DispatchActionConfiguration(object):
+class DispatchActionConfiguration(dict):
     """Slack Dispatch Action Configuration composition object builder.
 
     For more information, see the following URL:
