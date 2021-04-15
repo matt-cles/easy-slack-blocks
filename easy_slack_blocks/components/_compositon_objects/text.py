@@ -32,54 +32,79 @@ class Text(dict):
         if validate:
             self.validate()
 
-    def validate(self):
+    def validate(
+        self,
+        max_length=None,
+        required_type=None,
+        element_name=None,
+        reference_url=(
+            'https://api.slack.com/reference/block-kit/composition-objects#'
+            'text__fields'
+        ),
+    ):
+        # Preformat error message start/end
+        if element_name:
+            element = f'The \'{element_name}\' Text object'
+        else:
+            element = f'A Text object'
+        error_tag_line = (
+            f'\nSee {reference_url} for more information'
+        )
+
         if not isinstance(self, dict):
-            raise ValueError('A \'Text\' element must be a dict object')
+            raise ValueError(
+                f'{element} must be a dict object{error_tag_line}'
+            )
 
         # Validate text
         text = self.get('text')
         if not isinstance(text, str) or len(text) <= 0:
             raise ValueError(
-                'The \'text\' parameter must be a non-empty String\nSee '
-                'https://api.slack.com/reference/block-kit/composition-'
-                'objects#text__fields for more information'
+                f'{element} \'text\' parameter must be a non-empty String'
+                f'{error_tag_line}'
             )
         # Validate type, and remaining parameters based on type
         text_type = self.get('type')
         if text_type == Text.MRKDWN:
             if self.get('emoji') is not None:
                 raise ValueError(
-                    'The \'emoji\' parameter is only usable when '
-                    '\'type\' is \'plain_text\'.\nSee https://api.slack.com/'
-                    'reference/block-kit/composition-objects#text__fields '
-                    'for more information'
+                    f'{element} \'emoji\' parameter is only usable when '
+                    f'\'type\' is \'plain_text\'.{error_tag_line}'
                 )
             verbatim = self.get('verbatim')
             if verbatim is not None and not isinstance(verbatim, bool):
                 raise ValueError(
-                    'The \'verbatim\' parameter must be a Boolean if included.'
-                    '\nSee https://api.slack.com/reference/block-kit/'
-                    'composition-objects#text__fields for more information'
+                    f'{element} \'verbatim\' parameter must be a Boolean if '
+                    f'included.{error_tag_line}'
                 )
         elif text_type == Text.PLAIN_TEXT:
             if self.get('verbatim') is not None:
                 raise ValueError(
-                    'The \'verbatim\' parameter is only usable when '
-                    '\'type\' is \'mrkdwn\'.\nSee https://api.slack.com/'
-                    'reference/block-kit/composition-objects#text__fields '
-                    'for more information'
+                    f'{element} \'verbatim\' parameter is only usable when '
+                    f'\'type\' is \'mrkdwn\'.{error_tag_line}'
                 )
             emoji = self.get('emoji')
             if emoji is not None and not isinstance(emoji, bool):
                 raise ValueError(
-                    'The \'emoji\' parameter must be a Boolean if included.'
-                    '\nSee https://api.slack.com/reference/block-kit/'
-                    'composition-objects#text__fields for more information'
+                    f'{element} \'emoji\' parameter must be a Boolean if '
+                    f'included.{error_tag_line}'
                 )
         else:
             raise ValueError(
-                'The \'type\' parameter must be present and either be '
-                '\'mrkdwn\' or \'plain_text\'\nSee https://api.slack.com/'
-                'reference/block-kit/composition-objects#text__fields for '
-                'more information'
+                f'{element} \'type\' parameter must be present and either be '
+                f'\'mrkdwn\' or \'plain_text\'{error_tag_line}'
             )
+
+        if max_length:
+            if len(text) > max_length:
+                raise ValueError(
+                    f'{element} \'text\' parameter can be no longer than '
+                    f'{max_length} characters.{error_tag_line}'
+                )
+
+        if required_type:
+            if text_type != required_type:
+                raise ValueError(
+                    f'{element} \'type\' parameter must be {required_type}.'
+                    f'{error_tag_line}'
+                )

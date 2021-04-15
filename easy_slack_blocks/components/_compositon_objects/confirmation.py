@@ -58,32 +58,42 @@ class Confirmation(dict):
                 'A \'Confirmation\' element must be a dict object'
             )
 
-         # Validate title field:
+        # Validate title field:
         title = self.get('title')
-        try:
-            Text.validate(title)
-        except ValueError as err:
-            raise ValueError(
-                'The \'title\' parameter is not a valid \'Text\' element, '
-                'see error:\n'
-                f'{err}'
-            )
-        if len(title.get('text')) > 100:
-            raise ValueError(
-                'The \'title\' text object can have a \'title\' field no '
-                'longer than 100 characters.\nSee https://api.slack.com/'
-                'reference/block-kit/composition-objects#confirm__fields for '
-                'more information.'
-            )
-        if title.get('type') != Text.PLAIN_TEXT:
-            raise ValueError(
-                'The \'title\' text object must have a \'type\' field of '
-                'type \'plain_text\'.\nSee https://api.slack.com/reference/'
-                'block-kit/composition-objects#confirm__fields for more '
-                'information.'
-            )
+        Text.validate(
+            self=title, 
+            max_length=100, 
+            required_type=Text.PLAIN_TEXT,
+            element_name='title',
+            reference_url=(
+                'https://api.slack.com/reference/block-kit/composition-'
+                'objects#confirm__fields'
+            ),
+        )
+        # try:
+        #     Text.validate(title)
+        # except ValueError as err:
+        #     raise ValueError(
+        #         'The \'title\' parameter is not a valid \'Text\' element, '
+        #         'see error:\n'
+        #         f'{err}'
+        #     )
+        # if len(title.get('text')) > 100:
+        #     raise ValueError(
+        #         'The \'title\' text object can have a \'title\' field no '
+        #         'longer than 100 characters.\nSee https://api.slack.com/'
+        #         'reference/block-kit/composition-objects#confirm__fields for '
+        #         'more information.'
+        #     )
+        # if title.get('type') != Text.PLAIN_TEXT:
+        #     raise ValueError(
+        #         'The \'title\' text object must have a \'type\' field of '
+        #         'type \'plain_text\'.\nSee https://api.slack.com/reference/'
+        #         'block-kit/composition-objects#confirm__fields for more '
+        #         'information.'
+        #     )
 
-         # Validate text field:
+        # Validate text field:
         text = self.get('text')
         try:
             Text.validate(text)
@@ -101,7 +111,7 @@ class Confirmation(dict):
                 'more information.'
             )
 
-         # Validate confirm field:
+        # Validate confirm field:
         confirm = self.get('confirm')
         try:
             Text.validate(confirm)
@@ -126,7 +136,7 @@ class Confirmation(dict):
                 'information.'
             )
 
-         # Validate deny field:
+        # Validate deny field:
         deny = self.get('deny')
         try:
             Text.validate(deny)
